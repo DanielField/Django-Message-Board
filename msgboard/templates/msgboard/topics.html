@@ -1,0 +1,36 @@
+<head>
+    <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    </style>
+</head>
+
+<h2>{{board}}</h2>
+
+{% if topic_list %}
+<table>
+    {% for topic in topic_list %}
+        <tr>
+            <td><a href="/msgboard/{{ board.id }}/{{ topic.id }}/">{{ topic.name }}</a></td>
+            <td>{{topic.username}}</td>
+            <td>{{topic.dateCreated}}</td>
+            <td>{% if topic.isLocked %}LOCKED{% else %}OPEN{% endif %}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% else %}
+<h3>No topics found.</h3>
+{% endif%}

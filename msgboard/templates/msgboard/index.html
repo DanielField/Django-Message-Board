@@ -1,0 +1,9 @@
+{% if board_list %}
+    <ul>
+        {% for board in board_list %}
+            <li><a href="/msgboard/{{ board.id }}/">{{ board.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h2>No boards found.</h2>
+{% endif%}
