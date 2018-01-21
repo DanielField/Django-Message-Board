@@ -1,0 +1,30 @@
+<head>
+    <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    </style>
+</head>
+
+<h2>{{board}} > {{topic}}</h2>
+
+{% if msg_list %}
+<table>
+    {% for msg in msg_list %}
+        <tr>
+            <td style="width:300px"><h3>{{msg.user}}</h3><br>Date posted: {{msg.dateCreated}}<br>Likes: {{msg.likes}}</td>
+            <td>{{msg.text}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% else %}
+<h3>No messages found.</h3>
+{% endif%}

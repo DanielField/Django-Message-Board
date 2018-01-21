@@ -11,10 +11,6 @@
         text-align: left;
         padding: 8px;
     }
-    
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
     </style>
 </head>
 
@@ -23,8 +19,12 @@
 {% if topic_list %}
 <table>
     {% for topic in topic_list %}
-        <tr>
-            <td><a href="/msgboard/{{ board.id }}/{{ topic.id }}/">{{ topic.name }}</a></td>
+        {% if topic.isLocked %}                 <!---------------------------------->
+        <tr style="background-color:#dddddd"> <!----- Grey out locked topics ----->
+        {% else %}                              <!---------------------------------->
+        <tr>                                    <!----------------/msgboard/{{ board.id }}/{{ topic.id }}/------------------>
+        {% endif %}
+            <td><a href="{% url 'msgboard:messages' board.id topic.id %}">{{ topic.name }}</a></td> 
             <td>{{topic.username}}</td>
             <td>{{topic.dateCreated}}</td>
             <td>{% if topic.isLocked %}LOCKED{% else %}OPEN{% endif %}</td>

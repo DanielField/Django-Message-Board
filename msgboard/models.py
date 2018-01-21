@@ -12,20 +12,20 @@ class Board(models.Model):
 
 class Topic(models.Model):
     name = models.CharField(max_length=32)
-    userId = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     dateCreated = models.DateTimeField(default=now, null=True)
     isLocked = models.BooleanField(default=False)
-    boardId = models.ForeignKey(Board, on_delete=models.CASCADE)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 class Msg(models.Model):
-    userId = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     text = models.CharField(max_length=2048)
     likes = models.IntegerField(default=0)
     dateCreated = models.DateTimeField(default=now, null=True)
-    TopicId = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    Topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.text

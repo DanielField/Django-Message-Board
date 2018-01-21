@@ -1,9 +1,45 @@
+<head>
+    <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 300px;
+        background-color:rgb(185, 245, 255);
+    }
+
+    td {
+        width: 300px;
+    }
+    
+    td, th {
+        border: none;
+        text-align: center;
+        padding: 8px;
+    }
+    </style>
+</head>
+
+<center><h1>Daniel's Message Board</h1></center>
+
 {% if board_list %}
-    <ul>
-        {% for board in board_list %}
-            <li><a href="/msgboard/{{ board.id }}/">{{ board.name }}</a></li>
-        {% endfor %}
-    </ul>
+    {% for board in board_list %}
+        <div style="width:300px;margin-right: auto; margin-left: auto;">
+            <a href="{% url 'msgboard:topics' board.id %}" style="width:300px; text-decoration:none;">
+                <table>
+                    <tr>
+                        <td><img src="{{ board.icon }}"/></td>
+                    </tr>
+                    <tr>
+                        <td><h2>{{ board.name }}</h2></td>
+                    </tr>
+                    <tr>
+                        <td>{{board.description}}</td>
+                    </tr>
+                </table>
+            </a>
+        </div>
+    {% endfor %}
+    
 {% else %}
     <h2>No boards found.</h2>
 {% endif%}
