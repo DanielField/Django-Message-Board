@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Board, Topic, Msg
 from django.contrib.auth.models import User
 
@@ -35,7 +35,22 @@ def topics(request, board_id):
     return render(request, 'msgboard/topics.html', {
         'board':board,
         'topic_list': topic_list_view,
-})
+    })
+
+def add_topic(request, board_id):
+    current_board = get_object_or_404(Board, pk=board_id)
+    try:
+        title = request.POST['topic_title']
+        msg = request.POST['initial_msg']
+    except:
+        return render(request, 'msgboard/oops.html')
+    else:
+        topic = Topic(name=title, board=current_board, user=request.user, isLocked=False)
+        topic.save()
+        msg = Msg(user=request.user, Topic=topic, text=msg)
+        msg.save()
+
+        return redirect('msgboard:topics', board_id)
 
 def messages(request, board_id, topic_id):
     try:
@@ -59,3 +74,15 @@ def messages(request, board_id, topic_id):
         'msg_list': msg_list_view,
         'topic': topic,
 })
+
+def add_msg(request, board_id, topic_id):
+    current_topic = get_object_or_404(Topic, pk=topic_id)
+    try:
+        reply = request.POST['reply']
+    except:
+        return render(request, 'msgboard/oops.html')
+    else:
+        msg = Msg(user=request.user, Topic=current_topic, text=reply)
+        msg.save()
+
+        return redirect('msgboard:messages', board_id, topic_id)

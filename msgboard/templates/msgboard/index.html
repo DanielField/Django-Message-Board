@@ -1,4 +1,8 @@
+{% load staticfiles %}
+
 <head>
+    <link href="{%  static 'favicon.ico' %}" rel="shortcut icon"/>
+
     <style>
     table {
         font-family: arial, sans-serif;
@@ -27,7 +31,7 @@
             <a href="{% url 'msgboard:topics' board.id %}" style="width:300px; text-decoration:none;">
                 <table>
                     <tr>
-                        <td><img src="{{ board.icon }}"/></td>
+                        <td><img src="{% static board.icon %}" style="width:64px;height:64px;" /></td>
                     </tr>
                     <tr>
                         <td><h2>{{ board.name }}</h2></td>
