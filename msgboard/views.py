@@ -10,9 +10,9 @@ def index(request):
         'board_list': board_list, 
     })
 
+# Not proud of this code
 class TopicView(Topic):
     username = ''
-
 class MsgView(Msg):
     username = ''
 
@@ -21,20 +21,22 @@ def topics(request, board_id):
         board = Board.objects.get(pk=board_id)
         topic_list = Topic.objects.filter(board=board_id)
 
+        # not sure why this works... but it does i guess?
         topic_list_view = []
         i = 0
         for topic in topic_list:
             topic_list_view.append(TopicView(topic_list[i]))
             topic_list_view[i] = topic
-            topic_list_view[i].username = topic.user # not sure why this works... but it does i guess?
+            topic_list_view[i].username = topic.user 
             i+=1
+        #################################################
 
     except Board.DoesNotExist:
         raise Http404("Board doesn't exist")
         
     return render(request, 'msgboard/topics.html', {
         'board':board,
-        'topic_list': topic_list_view,
+        'topic_list': topic_list,
     })
 
 def add_topic(request, board_id):
@@ -58,13 +60,15 @@ def messages(request, board_id, topic_id):
         topic = Topic.objects.get(pk=topic_id)
         msg_list = Msg.objects.filter(Topic=topic_id)
 
+        # not sure why this works... but it does i guess?
         msg_list_view = []
         i = 0
         for msg in msg_list:
             msg_list_view.append(MsgView(msg_list[i]))
             msg_list_view[i] = msg
-            msg_list_view[i].username = msg.user # not sure why this works... but it does i guess?
+            msg_list_view[i].username = msg.user
             i+=1
+        #################################################
 
     except Msg.DoesNotExist:
         return render(request, 'msgboard/oops.html')
